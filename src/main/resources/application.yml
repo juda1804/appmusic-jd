@@ -2,9 +2,9 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     platform: postgress
-    url: jdbc:postgress://localhost:puerto/juandavidcadavid
-    username: juandavidcadavid
-    password:
+    url: jdbc:postgress://ec2-54-227-249-202.compute-1.amazonaws.com:5432/ddsq4ecrkcvk7j
+    username: elvutlmofndtrv
+    password: 3700927ad1b2ad349c265e3cba54041afbef90e958949ffe7aba8aab27fc3f42
   jpa:
     hibernate:
       ddl-auto: update
