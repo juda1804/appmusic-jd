@@ -9,19 +9,24 @@ import java.io.Serializable;
 
 
 @Entity
-@EqualsAndHashCode(exclude = "playList")
 @Table(name="song")
 public class Song implements Serializable {
 
+
+    private static final long serialVersionUID = 1L;
 
     @Getter
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long song_id;
+
+    @Getter
+    @Setter
     private String title;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="name_id")
+    @JoinColumn(name="playlist_id")
     private PlayList playList;
 
     @Getter
@@ -37,5 +42,13 @@ public class Song implements Serializable {
     private String year;
 
     public Song() {
+    }
+
+    public Song(String title, PlayList playList, String artist, String albun, String year) {
+        this.title = title;
+        this.playList = playList;
+        this.artist = artist;
+        this.albun = albun;
+        this.year = year;
     }
 }

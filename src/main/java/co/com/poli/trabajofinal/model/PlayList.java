@@ -6,16 +6,24 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "play_list")
-public class PlayList implements Serializable {
+public class PlayList extends Auditable<String> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Getter
     @Setter
-    @Column(name="name_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="playlist_id")
     @Id
+    private Long id;
+
+    @Getter
+    @Setter
     private String name;
 
     @Getter
@@ -24,9 +32,15 @@ public class PlayList implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany( mappedBy ="playList", cascade = CascadeType.ALL)
-    private Set<Song> songs;
+    @OneToMany( mappedBy="playList", cascade=CascadeType.ALL)
+    private List<Song> songs;
 
     public PlayList() {
+    }
+
+    public PlayList(String name, String description, List<Song> songs) {
+        this.name = name;
+        this.description = description;
+        this.songs = songs;
     }
 }
