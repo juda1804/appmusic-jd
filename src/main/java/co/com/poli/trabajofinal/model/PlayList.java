@@ -1,46 +1,32 @@
 package co.com.poli.trabajofinal.model;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
+import org.hibernate.annotations.Type;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "play_list")
-public class PlayList extends Auditable<String> implements Serializable {
+@Data
+@Table(name ="play_list")
+public class PlayList extends Auditable implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Getter
-    @Setter
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="playlist_id")
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
+    @Column(unique = true)
+    @NotBlank
     private String name;
 
-    @Getter
-    @Setter
     private String description;
 
-    @Getter
-    @Setter
-    @OneToMany( mappedBy="playList", cascade=CascadeType.ALL)
+    @Lob
+    @Type(type ="serializable")
     private List<Song> songs;
 
-    public PlayList() {
-    }
-
-    public PlayList(String name, String description, List<Song> songs) {
-        this.name = name;
-        this.description = description;
-        this.songs = songs;
-    }
 }
