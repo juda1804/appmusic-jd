@@ -6,7 +6,7 @@ spring:
     username: elvutlmofndtrv
     password: 3700927ad1b2ad349c265e3cba54041afbef90e958949ffe7aba8aab27fc3f42
   jpa:
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
 

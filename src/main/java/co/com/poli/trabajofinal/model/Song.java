@@ -12,11 +12,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@Entity
 public class Song implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
-
+    @Id
     private String title;
     private String artist;
     private String album;

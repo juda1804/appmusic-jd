@@ -22,12 +22,9 @@ public class PlayListService implements IPlayListService {
 
     @Override
     public Boolean update(PlayList playList) {
-        Optional<PlayList> playListOpt = playListDao.findByName(playList.getName());
+        Optional<PlayList> playListOpt = playListDao.findByNameEquals(playList.getName());
         return playListOpt.map(playL -> {
-           playListDao.updatePlaylist(
-                   playL.getId(),
-                   playList.getDescription()
-           );
+           playListDao.save(playList);
            return true;
         }).orElse(false);
     }
@@ -44,8 +41,7 @@ public class PlayListService implements IPlayListService {
 
     @Override
     public Optional<PlayList> findByName(String n) {
-        Optional<PlayList> playListOpt = playListDao.findByName(n);
-        return playListOpt;
+        return playListDao.findByNameEquals(n);
     }
 
 

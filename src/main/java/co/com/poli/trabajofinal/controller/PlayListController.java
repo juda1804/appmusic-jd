@@ -44,7 +44,7 @@ public class PlayListController {
     }
 
     @GetMapping("/lists/{listName}")
-    public ResponseHttp getOne(@RequestParam String listName) {
+    public ResponseHttp getOne(@PathVariable String listName) {
         Optional<PlayList> playListOpt = playListService.findByName(listName);
 
         if (! playListOpt.isPresent()) throw new ResourceNotFoundException(listName);
@@ -55,18 +55,15 @@ public class PlayListController {
         return responseHttp;
     }
 
-
-    @RequestMapping(
-            name ="/lists/{listName}",
-            method = RequestMethod.PUT
-    )
+    @PutMapping("/list/{listName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePlayList(@RequestBody PlayList playList){
-        Optional<PlayList> playListOpt = playListService.findByName(playList.getName());
+    public void updatePlayList(@RequestBody PlayList playList,@PathVariable("listName") String listName){
+
+        Optional<PlayList> playListOpt = playListService.findByName(listName);
         if (!playListOpt.isPresent()) throw new ResourceNotFoundException(playList.getName());
         playListOpt.map(
                 pl -> {
-                    if (!pl.getName().equals(playList.getName())) throw new ResourceConflict();
+                    if (!pl.getName().equals(playList.getName())) throw new ResourceConflict("You can't change the playlist's name");
                     return playListService.update(playList);
                 }
         );
@@ -74,7 +71,7 @@ public class PlayListController {
 
     @DeleteMapping("/lists/{listName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePlayList(@RequestParam String listName){
+    public void deletePlayList(@PathVariable String listName){
         Optional<PlayList> playListOpt = playListService.findByName(listName);
         if (!playListOpt.isPresent()) throw new ResourceNotFoundException(listName);
 
